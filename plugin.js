@@ -4,31 +4,30 @@
     var REG_HREF = /^http(s?):\/\//;
 
     CKEDITOR.plugins.add('openlink', {
-        requires: 'link',
-
         modes: { 'wysiwyg': 1 },
 
         init: function(editor) {
-            editor.on('contentDom', function() {
-                var editable = editor.editable();
+            editor.on('contentDom', this.onContentDom);
+        },
 
-                editable.attachListener(editable, 'click', function(evt) {
-                    var element = CKEDITOR.plugins.link.getSelectedLink(editor) || evt.data.element;
+        onContentDom: function() {
+            this.editable().on('click', this.plugins.openlink.onClick, this, null, 0);
+        },
 
-                    if (!element || element.isReadOnly() || !element.is('a')) {
-                        return;
-                    }
+        onClick: function(event) {
+            var nativeEvent = event.data.$;
+            var target = nativeEvent.target;
+            if (!target || target.tagName !== 'A')
+                return;
+            }
 
-                    var href = element.getAttribute('href');
+            var href = target.getAttribute('href');
+            if (!href || !REG_HREF.test(href)) {
+                return;
+            }
 
-                    if (!href || !REG_HREF.test(href)) {
-                        return;
-                    }
-
-                    evt.stop();
-                    window.open(href, '_blank');
-                });
-            });
+            event.stop();
+            window.open(href, '_blank');
         }
     });
 }());
