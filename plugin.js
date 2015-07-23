@@ -26,6 +26,16 @@
                 return;
             }
 
+            var selection = this.getSelection();
+            if (!selection) {
+                return;
+            }
+
+            var ranges = selection.getRanges();
+            if (!ranges.length || !ranges[0].collapsed) {
+                return;
+            }
+
             event.stop();
             window.open(href, '_blank');
         }
