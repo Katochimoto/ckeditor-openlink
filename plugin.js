@@ -17,7 +17,7 @@
         onClick: function(event) {
             var nativeEvent = event.data.$;
             var target = nativeEvent.target;
-            if (!target || target.tagName !== 'A')
+            if (!target || target.tagName !== 'A') {
                 return;
             }
 
