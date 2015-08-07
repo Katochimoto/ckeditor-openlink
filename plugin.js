@@ -15,24 +15,23 @@
         },
 
         onClick: function(event) {
-            var nativeEvent = event.data.$;
-            var target = nativeEvent.target;
-            if (!target || target.tagName !== 'A') {
-                return;
-            }
-
-            var href = target.getAttribute('href');
-            if (!href || !REG_HREF.test(href)) {
-                return;
-            }
-
             var selection = this.getSelection();
             if (!selection) {
                 return;
             }
 
             var ranges = selection.getRanges();
-            if (!ranges.length || !ranges[0].collapsed) {
+            if (!ranges.length || !ranges[ 0 ].collapsed) {
+                return;
+            }
+
+            var link = ranges[ 0 ].startPath().contains('a', true);
+            if (!link) {
+                return;
+            }
+
+            var href = link.getAttribute('href');
+            if (!href || !REG_HREF.test(href)) {
                 return;
             }
 
