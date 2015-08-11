@@ -20,12 +20,16 @@
                 return;
             }
 
-            var ranges = selection.getRanges();
-            if (!ranges.length || !ranges[ 0 ].collapsed) {
+            var range = selection.getRanges()[ 0 ];
+            if (!range ||
+                !range.collapsed ||
+                range.checkEndOfBlock() ||
+                range.checkStartOfBlock()) {
+
                 return;
             }
 
-            var link = ranges[ 0 ].startPath().contains('a', true);
+            var link = range.startPath().contains('a', true);
             if (!link) {
                 return;
             }
