@@ -40,7 +40,9 @@
             }
 
             event.stop();
-            window.open(href, '_blank');
+            setTimeout(function() {
+				window.open(href, '_blank');
+			}, 0);
         }
     });
 }());
