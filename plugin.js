@@ -29,7 +29,10 @@
                 return;
             }
 
-            var link = range.startPath().contains('a', true);
+            var nativeEvent = event.data.$;
+            var path = new CKEDITOR.dom.elementPath(new CKEDITOR.dom.element(nativeEvent.target), range.root);
+
+            var link = path.contains('a', true);
             if (!link) {
                 return;
             }
